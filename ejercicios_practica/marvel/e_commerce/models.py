@@ -41,3 +41,48 @@ class Comic(models.Model):
         es lo que retorna cuando llamamos al objeto.
         '''
         return f'{self.id}'
+
+
+class WishList(models.Model):
+    '''
+    Esta clase hereda de Django models.Model y crea una tabla llamada
+    e_commerce_WishList. Las columnas toman el nombre especificado de cada objeto.
+    '''
+    id = models.BigAutoField(db_column='ID',
+        primary_key=True)
+    user = models.ForeignKey(User, verbose_name='User',
+        on_delete=models.CASCADE,
+        default=1,
+        blank=False
+    )
+    comic = models.ForeignKey(Comic, verbose_name='Comic',
+        on_delete=models.CASCADE,
+        default=1,
+        blank=False
+    )
+    favorite = models.BooleanField(verbose_name='favorite',
+    default=False, unique=False
+    )
+    cart = models.BooleanField(verbose_name='cart',
+    default=False, unique=False
+    )
+    wished_qty = models.PositiveIntegerField(
+        verbose_name='wished qty', default=0
+    )
+    bought_qty = models.PositiveIntegerField(
+        verbose_name='bought qty', default=0
+    )
+    class Meta:
+        '''
+        Con "class Meta" podemos definir atributos de nuestras entidades como el nombre de la tabla.
+        '''
+        db_table = 'e_commerce_WishList'
+        verbose_name = 'WishList'
+        verbose_name_plural = 'WishLists'
+
+    def __str__(self):
+        '''
+        El método __str__ cumple una función parecida a __repr__ en SQL Alchemy, 
+        es lo que retorna cuando llamamos al objeto.
+        '''
+        return f'{self.id}'
